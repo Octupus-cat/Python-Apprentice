@@ -13,6 +13,21 @@ import turtle                           # Tell Python we want to work with the t
 turtle.setup (width=600, height=600)    # Set the size of the window
 tina = turtle.Turtle()                  # Create a turtle named tina
 
+tina.pencolor('red')
+tina.left(72)
+tina.forward(100)
+tina.pencolor('orange')
+tina.left(72)
+tina.forward(100)
+tina.pencolor('yellow')
+tina.left(72)
+tina.forward(100)
+tina.pencolor('green')
+tina.left(72)
+tina.forward(100)
+tina.pencolor('blue')
+tina.left(72)
+tina.forward(100)
 # Use tina.forward() and tina.left() to draw a pentagon
 # Make each side of the pentagon a different color with 
 # tina.pencolor()
