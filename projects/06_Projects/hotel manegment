@@ -1,0 +1,42 @@
+
+from tkinter import messagebox, simpledialog, Tk
+
+original = simpledialog.askstring(None, "would you like to check someone in or out?")
+
+if original == "in":
+    check_in1 = simpledialog.askstring(None, "Would you like to resserve a suite or a normal room?")
+
+cost = 0
+
+if check_in1 == "suite":
+    check_in2 = simpledialog.askstring(None, "How many nights would you like to reserve that for?")
+    cost += 100
+    check_in3 = simpledialog.askstring(None, "How many suites would you like to reserve for " + check_in2 + "nights?")
+
+elif check_in1 == "normal room":
+    check_in2 = simpledialog.askstring(None, "How many nights would you like to reserve that for?")
+    cost += 50
+    check_in3 = simpledialog.askstring(None, "How many normal rooms would you like to reserve for " + check_in2 + "nights?")
+
+cost = cost * int(check_in2)
+cost = cost * int(check_in3)
+
+check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + ". Cash or Card?")
+
+if check_in4 == "card" or "cash":
+    discount = simpledialog.askstring(None, "Do you have a membership?")
+    if discount == "no":
+        check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost))
+    if discount == "yes":
+        cost = cost/2
+        check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost))            
+    messagebox.showinfo(message="Thank you for staying at our hotel!")
+else:
+    messagebox.showerror(message="Error. Please use an approved payment method.")
+
+if original == "out":
+    check_out = simpledialog.askstring(None, "Thakn you for staying at our hotel!")
+
+    # I need to probably add rooms and stuff also checkout and if you want to extend you stay.
+
+
