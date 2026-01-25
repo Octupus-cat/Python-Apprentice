@@ -1,41 +1,75 @@
 
 from tkinter import messagebox, simpledialog, Tk
+import random
 
-original = simpledialog.askstring(None, "would you like to check someone in or out?")
+original = simpledialog.askstring(None, "Welcome to The League Hotel. Would you like to check someone in or out?")
 
 if original == "in":
-    check_in1 = simpledialog.askstring(None, "Would you like to resserve a suite or a normal room?")
+    check_in1 = simpledialog.askstring(None, "Would you like to reserve a suite or a normal room?")
 
 cost = 0
 
 if check_in1 == "suite":
     check_in2 = simpledialog.askstring(None, "How many nights would you like to reserve that for?")
     cost += 100
-    check_in3 = simpledialog.askstring(None, "How many suites would you like to reserve for " + check_in2 + "nights?")
-
+    check_in3 = simpledialog.askstring(None, "How many suites would you like to reserve for " + check_in2 + " nights?")
 elif check_in1 == "normal room":
     check_in2 = simpledialog.askstring(None, "How many nights would you like to reserve that for?")
     cost += 50
-    check_in3 = simpledialog.askstring(None, "How many normal rooms would you like to reserve for " + check_in2 + "nights?")
+    check_in3 = simpledialog.askstring(None, "How many normal rooms would you like to reserve for " + check_in2 + " nights?")
 
 cost = cost * int(check_in2)
 cost = cost * int(check_in3)
 
-check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + ". Cash or Card?")
+check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + ".00.")
+
+randNum = random.randint(0, 3)
 
 if check_in4 == "card" or "cash":
     discount = simpledialog.askstring(None, "Do you have a membership?")
     if discount == "no":
-        check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost))
+        check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + "0. Cash or Card?")
     if discount == "yes":
-        cost = cost/2
-        check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost))            
-    messagebox.showinfo(message="Thank you for staying at our hotel!")
-else:
-    messagebox.showerror(message="Error. Please use an approved payment method.")
+        level = simpledialog.askstring(None, "Do you have a Basic, Silver, Gold, or Platinum membership card?")
+        if level == "basic":
+            cost = cost-(cost/10)
+            if randNum == 0:
+                simpledialog.askstring(None, "That gets you 10% off.")
+            if randNum == 1:
+                simpledialog.askstring(None, "That gets you 10% off.")
+            if randNum == 2:
+                messagebox.showinfo(message="That gets you 10% off, and an upgrade! Your membership card is now Silver level!")  
+            if randNum == 3:
+                simpledialog.askstring(None, "That gets you 10% off")
+        elif level == "silver":
+            cost = cost-(cost/5)
+            if randNum == 0:
+                simpledialog.askstring(None, "That gets you 20% off.")
+            if randNum == 1:
+                simpledialog.askstring(None, "That gets you 20% off.")
+            if randNum == 2:
+                messagebox.showinfo(message="That gets you 20% off, and an upgrade! Your membership card is now Gold level!")  
+            if randNum == 3:
+                simpledialog.askstring(None, "That gets you 20% off")
+        elif level == "gold":
+            cost = cost-(cost/4)
+            if randNum == 0:
+                simpledialog.askstring(None, "That gets you 25% off.")
+            if randNum == 1:
+                simpledialog.askstring(None, "That gets you 25% off.")
+            if randNum == 2:
+                messagebox.showinfo(message="That gets you 25% off, and an upgrade! Your membership card is now Platinum level!")  
+            if randNum == 3:
+                simpledialog.askstring(None, "That gets you 25% off")
+        elif level == "platinum":
+            cost = cost/2
+            simpledialog.askstring(None, "Fancy! That gets you 50% off.")
+        check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + "0. Cash or Card?")            
+    messagebox.showinfo(message="Thank you for staying at The League Hotel!")
+
 
 if original == "out":
-    check_out = simpledialog.askstring(None, "Thakn you for staying at our hotel!")
+    check_out = simpledialog.askstring(None, "Thank you for staying at The League Hotel!")
 
     # I need to probably add rooms and stuff also checkout and if you want to extend you stay.
 
