@@ -2,6 +2,12 @@
 from tkinter import messagebox, simpledialog, Tk
 import random
 
+roomtype = ["suite", "suite", "suite", "normal room", "normal room"]
+
+reservation = {0:[], 1:[], 2:[], 3:[], 4:[]}
+
+#reservation will have the person's name, their total bill, and length of stay
+#0 = name, 1 = total, 2= length
 game = True
 
 while game == True:
@@ -14,26 +20,38 @@ while game == True:
     original = simpledialog.askstring(None, "Welcome to The League Hotel. Would you like to check someone in or out?")
 
     if original == "in":
+        name = simpledialog.askstring(None, "What is your name?")
         check_in1 = simpledialog.askstring(None, "Would you like to reserve a suite or a normal room?")
 
         if check_in1 == "suite":
             check_in2 = simpledialog.askstring(None, "How many nights would you like to reserve that for?")
             cost += 100
             print(cost)
-            check_in3 = simpledialog.askstring(None, "How many suites would you like to reserve for " + check_in2 + " nights?")
+
+            #check_in3 = simpledialog.askstring(None, "How many suites would you like to reserve for " + check_in2 + " nights?")
         elif check_in1 == "normal room":
             check_in2 = simpledialog.askstring(None, "How many nights would you like to reserve that for?")
             cost += 50
             print(cost)
-            check_in3 = simpledialog.askstring(None, "How many normal rooms would you like to reserve for " + check_in2 + " nights?")
+
+            #check_in3 = simpledialog.askstring(None, "How many normal rooms would you like to reserve for " + check_in2 + " nights?")
         else:
             back_up1 = messagebox.showerror(message= "'" + check_in1 + "' is not an acceptable response.")
-
-    cost = cost * int(check_in2)
-    print(cost)
-    cost = cost * int(check_in3)
-    print(cost)
-    check_in4 = messagebox.showinfo(message="That will cost $" + str(cost) + ".00.")
+        roomnumber = -1
+        for i in range(len(roomtype)):
+            if roomtype [i] == check_in1:
+                if len(reservation [i]) == 0:
+                    roomnumber = i
+                    break
+        if roomnumber > -1:
+            messagebox.showinfo(message="You will be in room " + str(roomnumber))
+        reservation [roomnumber] = [name, cost, check_in2]
+     
+    # cost = cost * int(check_in2)
+    # print(cost)
+    # #cost = cost * int(check_in3)
+    # print(cost)
+    # check_in4 = messagebox.showinfo(message="That will cost $" + str(cost) + ".00.")
 
     discount = simpledialog.askstring(None, "Do you have a membership?")
     if discount == "no":
@@ -50,7 +68,7 @@ while game == True:
             cost += 150
             print(cost)
 
-        card2 = simpledialog.askstring(None, "That will cost $" + str(cost) + "0 for " + check_in2 + " nights in " + check_in3 + " " + check_in1 + "s, with a " + purchase + " membership card. Will you pay with Cash or Card?")
+        card2 = simpledialog.askstring(None, "That will cost $" + str(cost) + "0 for " + check_in2 + " nights in " + check_in1 + "s, with a " + purchase + " membership card. Will you pay with Cash or Card?")
         if card2 == "card":
             simpledialog.askstring(None, "What is your credit card number?")
             if randNum == 0:
@@ -64,51 +82,55 @@ while game == True:
         else:
             messagebox.showinfo(message="Thank you for staying at The League Hotel!")
 
-        if discount == "yes":
-            level = simpledialog.askstring(None, "Do you have a Basic, Silver, Gold, or Platinum membership card?")
-            if level == "basic":
-                cost = cost-(cost/10)
-                if randNum == 0:
-                    simpledialog.askstring(None, "That gets you 10% off.")
-                if randNum == 1:
-                    simpledialog.askstring(None, "That gets you 10% off.")
-                if randNum == 2:
-                    messagebox.showinfo(message="That gets you 10% off, and an upgrade! Your membership card is now Silver level! All future Leauge Hotel stays will be 20% off.")  
-                if randNum == 3:
-                    simpledialog.askstring(None, "That gets you 10% off")
-            elif level == "silver":
-                cost = cost-(cost/5)
-                if randNum == 0:
-                    simpledialog.askstring(None, "That gets you 20% off.")
-                if randNum == 1:
-                    simpledialog.askstring(None, "That gets you 20% off.")
-                if randNum == 2:
-                    messagebox.showinfo(message="That gets you 20% off, and an upgrade! Your membership card is now Gold level! All future Leauge Hotel stays will be 25% off!")  
-                if randNum == 3:
-                    simpledialog.askstring(None, "That gets you 20% off")
-            elif level == "gold":
-                cost = cost-(cost/4)
-                if randNum == 0:
-                    simpledialog.askstring(None, "That gets you 25% off.")
-                if randNum == 1:
-                    simpledialog.askstring(None, "That gets you 25% off.")
-                if randNum == 2:
-                    messagebox.showinfo(message="That gets you 25% off, and an upgrade! Your membership card is now Platinum level! All future Leauge Hotel stays will be 50% off!")  
-                if randNum == 3:
-                    simpledialog.askstring(None, "That gets you 25% off")
-            elif level == "platinum":
-                cost = cost/2
-                if randNum == 0:
-                    simpledialog.askstring(None, "That gets you 50% off.")
-                if randNum == 1:
-                    simpledialog.askstring(None, "That gets you 50% off.")
-                if randNum == 2:
-                    messagebox.showinfo(message="That gets you 50% off, and a free meal at the hotel resturaunt!")  
-                if randNum == 3:
-                    simpledialog.askstring(None, "That gets you 50% off")
-        check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + "0 for " + check_in2 + " nights in " + check_in3 + " " + check_in1 + "s, with a " + level + " membership card. Will you pay with Cash or Card?")     
+        exit = simpledialog.askstring(None, "Would you like to sign out?")
+        if exit == "yes":
+            game = False
+
+    if discount == "yes":
+        level = simpledialog.askstring(None, "Do you have a Basic, Silver, Gold, or Platinum membership card?")
+        if level == "basic":
+            cost = cost-(cost/10)
+            if randNum == 0:
+                simpledialog.askstring(None, "That gets you 10% off.")
+            if randNum == 1:
+                simpledialog.askstring(None, "That gets you 10% off.")
+            if randNum == 2:
+                messagebox.showinfo(message="That gets you 10% off, and an upgrade! Your membership card is now Silver level! All future Leauge Hotel stays will be 20% off.")  
+            if randNum == 3:
+                simpledialog.askstring(None, "That gets you 10% off")
+        elif level == "silver":
+            cost = cost-(cost/5)
+            if randNum == 0:
+                simpledialog.askstring(None, "That gets you 20% off.")
+            if randNum == 1:
+                simpledialog.askstring(None, "That gets you 20% off.")
+            if randNum == 2:
+                messagebox.showinfo(message="That gets you 20% off, and an upgrade! Your membership card is now Gold level! All future Leauge Hotel stays will be 25% off!")  
+            if randNum == 3:
+                simpledialog.askstring(None, "That gets you 20% off")
+        elif level == "gold":
+            cost = cost-(cost/4)
+            if randNum == 0:
+                simpledialog.askstring(None, "That gets you 25% off.")
+            if randNum == 1:
+                simpledialog.askstring(None, "That gets you 25% off.")
+            if randNum == 2:
+                messagebox.showinfo(message="That gets you 25% off, and an upgrade! Your membership card is now Platinum level! All future Leauge Hotel stays will be 50% off!")  
+            if randNum == 3:
+                simpledialog.askstring(None, "That gets you 25% off")
+        elif level == "platinum":
+            cost = cost/2
+            if randNum == 0:
+                simpledialog.askstring(None, "That gets you 50% off.")
+            if randNum == 1:
+                simpledialog.askstring(None, "That gets you 50% off.")
+            if randNum == 2:
+                messagebox.showinfo(message="That gets you 50% off.")  
+            if randNum == 3:
+                simpledialog.askstring(None, "That gets you 50% off")
+        check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + " for " + check_in2 + " nights in " + check_in3 + " " + check_in1 + "s, with a " + level + " membership card. Will you pay with Cash or Card?")     
         if check_in4 == "card":
-            simpledialog.askstring(None, "What is your credit card number?")
+            simpledialog.askinteger(None, "What is your credit card number?")
             if randNum == 0:
                 messagebox.showerror(message="Your Credit Card has been declined. Please try again.")
             if randNum == 1:
@@ -117,17 +139,17 @@ while game == True:
                 messagebox.showinfo(message="Thank you for staying at The League Hotel!")
             if randNum == 3:
                 messagebox.showinfo(message="Thank you for staying at The League Hotel!")
-    
-    exit = simpledialog.askstring(None, "Would you like to sign out?")
-    if exit == "yes":
-        game = False
 
         #messagebox.showinfo(message="Thank you for staying at The League Hotel!")
 
+        exit = simpledialog.askstring(None, "Would you like to sign out?")
+        if exit == "yes":
+            game = False
+    print(reservation)
     #check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + ". Cash or Card?")
 
     #check_out = simpledialog.askstring(None, "Thank you for staying at The League Hotel!")
 
-        # I need to probably add rooms and stuff also checkout and if you want to extend you stay.
+        # I need to probably add rooms and stuff also checkout and if you want to extend your stay.
 
 
