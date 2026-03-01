@@ -2,17 +2,12 @@
 from tkinter import messagebox, simpledialog, Tk
 import random
 
-rooms = [Room (i, "normal room") for i in range(50)]
 
 #reservation will have the person's name, their total bill, and length of stay
 #0 = name, 1 = total, 2= length
+class Rooms:
+    def __init__(self,time, number, )
 
-class Room():
-    def __init__(self, time, number, type):
-        self.time = time
-        self.number = number
-        self.type = type
-        
 game = True
 
 while game == True:
@@ -32,7 +27,7 @@ while game == True:
             check_in2 = simpledialog.askstring(None, "How many nights would you like to reserve that for?")
             cost += 100
             print(cost)
-
+            
             #check_in3 = simpledialog.askstring(None, "How many suites would you like to reserve for " + check_in2 + " nights?")
         elif check_in1 == "normal room":
             check_in2 = simpledialog.askstring(None, "How many nights would you like to reserve that for?")
@@ -40,12 +35,11 @@ while game == True:
             print(cost)
 
             #check_in3 = simpledialog.askstring(None, "How many normal rooms would you like to reserve for " + check_in2 + " nights?")
-        else:
-            back_up1 = messagebox.showerror(message= "'" + check_in1 + "' is not an acceptable response.")
+     
         roomnumber = -1
-        for i in range(len(roomtype)):
-            if roomtype [i] == check_in1:
-                if len(reservation [i]) == 0:
+        for i in range(len(rooms)):
+            if rooms [i] == check_in1:
+                if len(rooms [i]) == 0:
                     roomnumber = i
                     break
         if roomnumber < 0:
@@ -53,7 +47,7 @@ while game == True:
 
         if roomnumber > -1:
             messagebox.showinfo(message="You will be in room " + str(roomnumber))
-        reservation [roomnumber] = [name, cost, check_in2]
+        rooms [roomnumber] = [name, cost, check_in2]
      
     # cost = cost * int(check_in2)
     # print(cost)
@@ -63,17 +57,11 @@ while game == True:
 
     discount = simpledialog.askstring(None, "Do you have a membership?")
     if discount == "no":
-        purchase = simpledialog.askstring(None, "Would you like to buy a basic level membership card? It would only cost $15, and it would get you 10% off! " \
-        "Or, you could buy a PLATINUM card for only $150 and would get you 50% off!")
+        purchase = simpledialog.askstring(None, "Would you like to buy a basic level membership card? It would only cost $15, and it would get you 10% off!")
         if purchase == "basic":
             cost = cost-(cost/10)
             print(cost)
             cost += 15
-            print(cost)
-        if purchase == "platinum":
-            cost = cost/2
-            print(cost)
-            cost += 150
             print(cost)
 
         card2 = simpledialog.askstring(None, "That will cost $" + str(cost) + "0 for " + check_in2 + " nights in a " + check_in1 + ", with " + purchase + " membership card. Will you pay with Cash or Card?")
@@ -153,7 +141,7 @@ while game == True:
         exit = simpledialog.askstring(None, "Would you like to sign out?")
         if exit == "yes":
             game = False
-    print(reservation)
+    print(rooms)
     #check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + ". Cash or Card?")
 
     #check_out = simpledialog.askstring(None, "Thank you for staying at The League Hotel!")
