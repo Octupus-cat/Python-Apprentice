@@ -2,11 +2,15 @@
 from tkinter import messagebox, simpledialog, Tk
 import random
 
-
 #reservation will have the person's name, their total bill, and length of stay
 #0 = name, 1 = total, 2= length
-class Rooms:
-    def __init__(self,time, number, )
+class Room:
+    def __init__(self, time, cost, name):
+        self.time = time
+        self.cost = cost
+        self.name = name
+
+rooms = [Room(0, 100, "") for i in range (100)]
 
 game = True
 
@@ -21,21 +25,20 @@ while game == True:
 
     if original == "in":
         name = simpledialog.askstring(None, "What is your name?")
-        check_in1 = simpledialog.askstring(None, "Would you like to reserve a suite or a normal room?")
-
-        if check_in1 == "suite":
-            check_in2 = simpledialog.askstring(None, "How many nights would you like to reserve that for?")
-            cost += 100
+        check_in1 = simpledialog.askstring(None, "What floor would you like to be on? We have 3 floors.")
+        if check_in1 == "1":
             print(cost)
-            
-            #check_in3 = simpledialog.askstring(None, "How many suites would you like to reserve for " + check_in2 + " nights?")
-        elif check_in1 == "normal room":
-            check_in2 = simpledialog.askstring(None, "How many nights would you like to reserve that for?")
             cost += 50
-            print(cost)
+            #give and find and assign room
+        if check_in1 == "2":
+            print()
+            cost += 100
+            #give and find and assign room
+        if check_in1 == "3":
+            print()
+            cost += 150
+            #give and find and assign room
 
-            #check_in3 = simpledialog.askstring(None, "How many normal rooms would you like to reserve for " + check_in2 + " nights?")
-     
         roomnumber = -1
         for i in range(len(rooms)):
             if rooms [i] == check_in1:
@@ -47,7 +50,7 @@ while game == True:
 
         if roomnumber > -1:
             messagebox.showinfo(message="You will be in room " + str(roomnumber))
-        rooms [roomnumber] = [name, cost, check_in2]
+        rooms [roomnumber] = [name, cost]
      
     # cost = cost * int(check_in2)
     # print(cost)
@@ -57,7 +60,7 @@ while game == True:
 
     discount = simpledialog.askstring(None, "Do you have a membership?")
     if discount == "no":
-        purchase = simpledialog.askstring(None, "Would you like to buy a basic level membership card? It would only cost $15, and it would get you 10% off!")
+        purchase = simpledialog.askstring(None, "Would you like to buy a membership card? It would only cost $15, and it would get you 10% off!")
         if purchase == "basic":
             cost = cost-(cost/10)
             print(cost)
@@ -147,5 +150,3 @@ while game == True:
     #check_out = simpledialog.askstring(None, "Thank you for staying at The League Hotel!")
 
         # I need to probably add rooms and stuff also checkout and if you want to extend your stay.
-
-
