@@ -4,12 +4,16 @@ import random
 
 #reservation will have the person's name, their total bill, and length of stay
 #0 = name, 1 = total, 2= length
+
 class Room:
     def __init__(self, time, cost, name):
         self.time = time
         self.cost = cost
         self.name = name
-
+    def is_avaliable(self):
+        if self.name or self.time:
+            return False
+        
 rooms = [Room(0, 100, "") for i in range (100)]
 
 game = True
