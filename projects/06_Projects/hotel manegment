@@ -14,6 +14,12 @@ class Room:
         if self.name or self.time:
             return False
         
+#class DeluxeRoom(Room):
+    #def __init__(self, time, cost, name):
+        #self.time = time
+        #self.cost = cost*2
+        #self.name = name
+        
 rooms = [Room(0, 100, "") for i in range (100)]
 
 game = True
@@ -33,15 +39,12 @@ while game == True:
         if check_in1 == "1":
             print(cost)
             cost += 50
-            #give and find and assign room
         if check_in1 == "2":
             print()
             cost += 100
-            #give and find and assign room
         if check_in1 == "3":
             print()
             cost += 150
-            #give and find and assign room
 
         roomnumber = -1
         for i in range(len(rooms)):
@@ -71,19 +74,7 @@ while game == True:
             cost += 15
             print(cost)
 
-        card2 = simpledialog.askstring(None, "That will cost $" + str(cost) + "0 for " + check_in2 + " nights in a " + check_in1 + ", with " + purchase + " membership card. Will you pay with Cash or Card?")
-        if card2 == "card":
-            simpledialog.askstring(None, "What is your credit card number?")
-            if randNum == 0:
-                messagebox.showerror(message="Your Credit Card has been declined. Please try again.")
-            if randNum == 1:
-                messagebox.showinfo(message="Thank you for staying at The League Hotel!")
-            if randNum == 2:
-                messagebox.showinfo(message="Thank you for staying at The League Hotel!")
-            if randNum == 3:
-                messagebox.showinfo(message="Thank you for staying at The League Hotel!")
-        else:
-            messagebox.showinfo(message="Thank you for staying at The League Hotel!")
+        messagebox.showinfo(message="Thank you for staying at The League Hotel!")
 
         exit = simpledialog.askstring(None, "Would you like to sign out?")
         if exit == "yes":
