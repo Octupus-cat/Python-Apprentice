@@ -26,7 +26,7 @@ while game == True:
 
     randNum = random.randint(0, 3)
 
-    print(randNum)
+    print("Number is " + str(randNum) + ". If 0, card is declined.")
 
     cost = 0
     original = simpledialog.askstring(None, "Welcome to The League Hotel. Would you like to check someone in or out?")
@@ -36,13 +36,10 @@ while game == True:
         time = simpledialog.askstring(None, "How many nights would you like to stay for?")
         check_in1 = simpledialog.askstring(None, "What floor would you like to be on? We have 3 floors.")
         if check_in1 == "1":
-            print(cost)
             cost += 50
         if check_in1 == "2":
-            print()
             cost += 100
         if check_in1 == "3":
-            print()
             cost += 150
 
         roomnumber = -1
@@ -60,25 +57,19 @@ while game == True:
 
         if roomnumber > -1:
             messagebox.showinfo(message="You will be in room " + str(roomnumber))
+            rooms[roomnumber].reserve(name,time)
             rooms [roomnumber].name = name
             rooms [roomnumber].cost = cost
             rooms [roomnumber].time = time
 
     discount = simpledialog.askstring(None, "Do you have a membership?")
+
     if discount == "no":
         purchase = simpledialog.askstring(None, "Would you like to buy a membership card? It would only cost $15, and it would get you 10% off!")
         if purchase == "yes":
             cost = cost-(cost/10)
-            print(cost)
             cost += 15
-            print(cost)
-
-        simpledialog.askstring(message="That will cost $" + str(cost) + " for " + time + " nights on floor " + check_in1 + ". Cash or Card?")
-        messagebox.showinfo(message="Thank you for staying at The League Hotel!")
-
-        exit = simpledialog.askstring(None, "Would you like to sign out?")
-        if exit == "yes":
-            game = False
+        check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + " for " + time + " nights on floor " + check_in1 + ", with no membership card. Will you pay with Cash or Card?")
 
     if discount == "yes":
         level = simpledialog.askstring(None, "Do you have a Basic, Silver, Gold, or Platinum membership card?")
@@ -95,19 +86,29 @@ while game == True:
             cost = cost/2
             simpledialog.askstring(None, "That gets you 50% off.")
         check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + " for " + time + " nights on floor " + check_in1 + ", with a " + level + " membership card. Will you pay with Cash or Card?")     
-        if check_in4 == "card":
-            simpledialog.askinteger(None, "What is your credit card number?")
-            if randNum == 0:
-                messagebox.showerror(message="Your Credit Card has been declined. Please try again.")
-            else:
-                messagebox.showinfo(message="You have paid. Thank you for staying at The League Hotel!")
-
+    
+    if check_in4 == "card":
+        cardnum = simpledialog.askinteger(None, "What is your credit card number?")
+        if randNum == 0:
+            messagebox.showerror(message="Your Credit Card has been declined. Please try again.")
+            decline = "was"
+        else:
+            messagebox.showinfo(message="You have paid. Thank you for staying at The League Hotel!")
+            decline = "was not"
+        print("Card number is " + str(cardnum) + ". Card " + decline + " declined.")
+    else:
+        messagebox.showinfo(message="You have paid. Thank you for staying at The League Hotel!")
         #messagebox.showinfo(message="Thank you for staying at The League Hotel!")
         #print(reservation)
-        exit = simpledialog.askstring(None, "Would you like to sign out?")
-        if exit == "yes":
-            game = False
-    print(rooms)
-    #check_in4 = simpledialog.askstring(None, "That will cost $" + str(cost) + " for " + time + " nights on floor " + check_in1 + ". Cash or Card?")
 
-    #check_out = simpledialog.askstring(None, "Thank you for staying at The League Hotel!")
+    print("Name is " + name + ". Staying for " + str(time) + " nights on floor " + str(check_in1) + ". Paid $" + str(cost) + " with " + check_in4 + ".")
+    
+    day = simpledialog.askstring(None, "Has one day passed?")
+    if day == "yes":
+        time = time-1
+    if time == 0:
+        simpledialog.askstring(None, "Someone is ready to check out!")
+
+    exit = simpledialog.askstring(None, "Would you like to sign out?")
+    if exit == "yes":
+        game = False
